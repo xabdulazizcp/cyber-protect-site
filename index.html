@@ -3,91 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cyber Protect - Expert Security Solutions</title>
-    <!-- Tailwind CSS for styling -->
+    <title>StarPay Payment Page</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #111827; color: white; }
-        .hero-bg {
-            /* কভার ফটো ব্যাকগ্রাউন্ড হিসেবে ব্যবহার করা হয়েছে */
-            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(17, 24, 39, 1)), url('আপনার_পেজের_কভার_ফটো_লিঙ্ক_এখানে');
-            background-size: cover;
-            background-position: center;
+        body { background-color: #eef2f3; font-family: 'Arial', sans-serif; }
+        .main-card { background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); width: 100%; max-width: 600px; overflow: hidden; position: relative; }
+        .top-banner { background-color: #005a3c; color: white; padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; }
+        .bkash-bg { background-color: #d12078; color: white; }
+        .input-box { border: 2px solid #ff0000; border-radius: 4px; padding: 12px; width: 100%; font-size: 18px; outline: none; }
+        .submit-btn { border: 1px solid #333; border-radius: 4px; padding: 10px 40px; background: white; font-weight: bold; cursor: pointer; }
+
+        /* ইউনিক লোডিং স্টাইল */
+        .loading-overlay {
+            position: absolute; inset: 0; background: rgba(255, 255, 255, 0.95);
+            display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 20;
         }
+        .custom-loader {
+            width: 50px; height: 50px; border: 5px solid #f3f3f3; border-top: 5px solid #d12078;
+            border-radius: 50%; animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* সাকসেস মেসেজ এনিমেশন */
+        #success-modal { display: none; }
+        .success-card { animation: slideUp 0.5s ease-out; }
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
     </style>
 </head>
-<body>
+<body class="flex flex-col items-center justify-center min-h-screen p-4">
 
-    <!-- Header & Hero Section with Cover Photo -->
-    <div class="hero-bg">
-        <header class="py-4 px-6 md:px-12 flex justify-between items-center border-b border-gray-800 bg-gray-900 bg-opacity-80">
-            <div class="flex items-center gap-3">
-                <!-- পেজের লোগো -->
-                <img src="আপনার_পেজের_লোগো_লিঙ্ক_এখানে" alt="Cyber Protect Logo" class="w-12 h-12 rounded-full border-2 border-blue-500">
-                <h1 class="text-2xl font-bold text-white">Cyber Protect</h1>
-            </div>
-            <nav>
-                <a href="https://wa.me/8801339079817" target="_blank" class="bg-blue-600 px-5 py-2.5 rounded-full font-semibold hover:bg-blue-700 transition duration-300">যোগাযোগ করুন</a>
-            </nav>
-        </header>
+    <div class="main-card">
+        <div id="loading" class="loading-overlay">
+            <div class="custom-loader mb-4"></div>
+            <p class="text-pink-600 font-bold animate-pulse">Verifying Transaction ID...</p>
+            <p class="text-[10px] text-gray-400 mt-2">Please wait, connecting to server</p>
+        </div>
 
-        <section class="text-center py-24 px-5">
-            <h2 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">আপনার ডিজিটাল সুরক্ষায় <br><span class="text-blue-500">আমরা বদ্ধপরিকর</span></h2>
-            <p class="text-gray-300 text-lg md:text-xl max-w-3xl mx-auto mb-10">আমরা আপনার সোশ্যাল মিডিয়া অ্যাকাউন্ট রিকভারি, ডিজিটাল অ্যাসেট নিরাপত্তা এবং সাইবার সিকিউরিটি পরামর্শে বিশেষজ্ঞ সেবা প্রদান করি। আমাদের অভিজ্ঞ টিম আপনার সমস্যার দ্রুত সমাধানে কাজ করে।</p>
-            <div class="flex gap-4 justify-center">
-                <a href="#services" class="bg-gray-800 px-8 py-3 rounded-full font-semibold hover:bg-gray-700 transition">আমাদের সার্ভিস</a>
-                <a href="https://wa.me/8801339079817" target="_blank" class="bg-green-600 px-8 py-3 rounded-full font-semibold hover:bg-green-700 transition flex items-center gap-2">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.001 5.45-4.436 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-                    হোয়াটসঅ্যাপ চ্যাট
-                </a>
+        <div class="top-banner">
+            <div>
+                <h2 class="text-xl font-bold italic">BDT 50,000.00</h2>
+                <p class="text-[12px] opacity-90">Don't over or under cash out.</p>
             </div>
-        </section>
+            <div class="flex flex-col items-end text-[10px]">
+                <div class="bg-white/20 px-2 py-1 rounded">PAY SERVICE</div>
+                <div class="mt-2 flex gap-1"><span class="bg-gray-300 text-black px-1 rounded">EN</span><span class="bg-white text-black px-1 rounded">বাং</span></div>
+            </div>
+        </div>
+
+        <div class="p-8">
+            <p class="text-red-500 font-bold mb-6 text-sm italic">If you change the amount (BDT 50,000.00), you won't get the credit</p>
+
+            <div class="flex justify-between items-start mb-8">
+                <div class="w-1/2">
+                    <label class="text-sm font-bold block mb-1">Wallet No*</label>
+                    <p class="text-[11px] text-gray-600 mb-2">This BKASH number only accepts cashouts.</p>
+                    <div class="bg-gray-100 p-3 rounded border border-gray-200 font-mono text-gray-700">01347249508</div>
+                </div>
+
+                <div class="w-[45%]">
+                    <label class="text-sm font-bold block mb-2 text-gray-700">Wallet Provider</label>
+                    <div class="bkash-bg p-3 rounded flex items-center gap-3">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/BKash_Logo.svg/512px-BKash_Logo.svg.png" class="w-8 h-8 bg-white rounded-full p-1">
+                        <span class="font-bold text-sm text-white">BKASH Deposit</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <label class="text-sm font-bold block mb-2">Transaction ID* <span class="text-pink-600">(Required)</span></label>
+                <input type="text" id="trxID" placeholder="TrxID Required!" class="input-box">
+            </div>
+
+            <div class="text-center mb-8">
+                <button onclick="startProcessing()" class="submit-btn">Submit</button>
+            </div>
+
+            <div class="border-t border-dashed border-gray-300 pt-4 text-[10px]">
+                <p class="text-red-600 font-bold uppercase mb-1">Warning:</p>
+                <p class="text-red-600 font-bold mb-2">Transaction ID must be filled in correctly, otherwise the score will fail!</p>
+                <p class="text-gray-400">Please note that you make deposit to BKASH deposit. Be sure that you make the payment from the same wallet.</p>
+            </div>
+        </div>
     </div>
 
-    <!-- Services Section -->
-    <section id="services" class="py-20 px-6 md:px-12 bg-gray-800">
-        <div class="max-w-6xl mx-auto">
-            <h3 class="text-4xl font-bold text-center mb-6 text-white">আমাদের প্রধান সার্ভিসসমূহ</h3>
-            <p class="text-gray-400 text-center max-w-2xl mx-auto mb-16 text-lg">আপনার অনলাইন উপস্থিতি সুরক্ষিত রাখতে আমরা বিভিন্ন ধরণের কারিগরি এবং আইনি সহায়তা প্রদান করি। আমাদের জনপ্রিয় সেবাগুলো নিচে দেওয়া হলো:</p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Service 1 -->
-                <div class="p-8 bg-gray-900 rounded-2xl border border-gray-700 hover:border-blue-500 hover:shadow-2xl hover:shadow-blue-900/30 transition duration-300 transform hover:-translate-y-2">
-                    <div class="w-14 h-14 bg-blue-900/50 rounded-full flex items-center justify-center mb-6 border border-blue-700">
-                        <svg class="w-7 h-7 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-                    </div>
-                    <h4 class="text-2xl font-bold mb-4 text-white">Account Recovery</h4>
-                    <p class="text-gray-400 leading-relaxed">হ্যাক হওয়া, ডিজেবল হওয়া বা টু-ফ্যাক্টর অথেন্টিকেশন সমস্যায় পড়া ফেসবুক, ইনস্টাগ্রাম, এবং অন্যান্য সোশ্যাল মিডিয়া আইডি দ্রুত এবং নিরাপদে উদ্ধার করে দিই।</p>
-                </div>
-                <!-- Service 2 -->
-                <div class="p-8 bg-gray-900 rounded-2xl border border-gray-700 hover:border-blue-500 hover:shadow-2xl hover:shadow-blue-900/30 transition duration-300 transform hover:-translate-y-2">
-                    <div class="w-14 h-14 bg-blue-900/50 rounded-full flex items-center justify-center mb-6 border border-blue-700">
-                        <svg class="w-7 h-7 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                    </div>
-                    <h4 class="text-2xl font-bold mb-4 text-white">Copyright Protection</h4>
-                    <p class="text-gray-400 leading-relaxed">আপনার কন্টেন্ট (ভিডিও, ছবি বা লেখা) অন্য কেউ কপি করলে আমরা তা রিমুভ করতে এবং আপনার ডিজিটাল অ্যাসেটের পূর্ণ নিরাপত্তা নিশ্চিত করতে আইনি ও টেকনিক্যাল সহায়তা দিই।</p>
-                </div>
-                <!-- Service 3 -->
-                <div class="p-8 bg-gray-900 rounded-2xl border border-gray-700 hover:border-blue-500 hover:shadow-2xl hover:shadow-blue-900/30 transition duration-300 transform hover:-translate-y-2">
-                    <div class="w-14 h-14 bg-blue-900/50 rounded-full flex items-center justify-center mb-6 border border-blue-700">
-                        <svg class="w-7 h-7 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.168.477 4 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-                    </div>
-                    <h4 class="text-2xl font-bold mb-4 text-white">Premium Security Course</h4>
-                    <p class="text-gray-400 leading-relaxed">মাত্র ৫৯০ টাকায় আমাদের প্রিমিয়াম সাইবার সিকিউরিটি কোর্সে জয়েন করে শিখুন কীভাবে নিজেকে এবং আপনার পরিবারকে অনলাইন হ্যাকিং এবং স্ক্যাম থেকে সুরক্ষিত রাখবেন।</p>
-                </div>
+    <div id="success-modal" class="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+        <div class="success-card bg-white rounded-2xl p-8 max-w-sm w-full text-center shadow-2xl border-b-8 border-green-500">
+            <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4 border-4 border-green-500">
+                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
             </div>
+            <h2 class="text-3xl font-black text-gray-800 mb-2 uppercase italic">Success!</h2>
+            <div class="bg-gray-100 rounded-lg p-3 mb-6">
+                <p class="text-gray-600 text-xs uppercase tracking-widest">Added Amount</p>
+                <p class="text-2xl font-bold text-green-600">৳ 50,000.00</p>
+            </div>
+            <p class="text-gray-500 text-sm mb-8 leading-relaxed">Your Transaction ID has been <span class="text-green-600 font-bold">Successfully Verified</span>. Balance has been added to <span class="font-bold text-pink-600 italic">9xbet</span> account.</p>
+            <button onclick="location.reload()" class="bg-black text-white px-8 py-3 rounded-full font-bold w-full hover:bg-green-600 transition-all">OK, Thanks</button>
         </div>
-    </section>
+    </div>
 
-    <!-- Footer -->
-    <footer class="py-12 px-6 md:px-12 text-center border-t border-gray-800 bg-gray-950">
-        <div class="flex items-center gap-3 justify-center mb-6">
-            <img src="আপনার_পেজের_লোগো_লিঙ্ক_এখানে" alt="Cyber Protect Logo" class="w-10 h-10 rounded-full border border-gray-700">
-            <p class="text-xl font-semibold text-white">&copy; 2026 Cyber Protect. All Rights Reserved.</p>
-        </div>
-        <p class="text-gray-500 mb-2">Developed with care by Abdul Aziz</p>
-        <p class="text-sm text-blue-500">Official Domain: xjabdulaziz.bro.bd</p>
-    </footer>
+    <script>
+        function startProcessing() {
+            const trx = document.getElementById('trxID').value;
+            if(!trx) { alert("Enter Transaction ID"); return; }
 
+            // লোডিং দেখানো
+            document.getElementById('loading').style.display = 'flex';
+
+            // ৪ সেকেন্ড লোডিং হওয়ার পর সাকসেস আসবে
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('success-modal').style.display = 'flex';
+            }, 4000);
+        }
+    </script>
 </body>
 </html>
